@@ -6,3 +6,5 @@ Implementation of basic datastructures and infix to posfix conversion in C (IAL1
   - [Hash table](https://github.com/xzovin00/Data-structures/tree/master/hashTable)
   - [Recursive binary tree](https://github.com/xzovin00/Data-structures/tree/master/recursiveBinaryTree)
   - [Non-recursive binary tree](https://github.com/xzovin00/Data-structures/tree/master/nonRecursiveBinaryTree)
+  
+  The comments are in Czech.
