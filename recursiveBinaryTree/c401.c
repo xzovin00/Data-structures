@@ -144,8 +144,22 @@ void ReplaceByRightmost (tBSTNodePtr PtrReplaced, tBSTNodePtr *RootPtr) {
 
 	
 
-	 solved = FALSE;		  /* V případě řešení smažte tento řádek! */
+	if( !*RootPtr )
+		return;
 
+
+	if(( *RootPtr)->RPtr)
+		ReplaceByRightmost( PtrReplaced, &(( *RootPtr )->RPtr ));
+	else{
+		tBSTNodePtr delete_me = ( *RootPtr );
+		
+		PtrReplaced->Key = delete_me->Key;
+		PtrReplaced->BSTNodeCont = delete_me->BSTNodeCont;
+		
+		( *RootPtr ) = ( *RootPtr )->LPtr;
+
+		free(delete_me);
+	}
 }
 
 void BSTDelete (tBSTNodePtr *RootPtr, char K) 		{
@@ -163,8 +177,27 @@ void BSTDelete (tBSTNodePtr *RootPtr, char K) 		{
 
 	
 
-	 solved = FALSE;		  /* V případě řešení smažte tento řádek! */
+	 if( !*RootPtr )
+		return;
 
+	if (K < ( *RootPtr )->Key)		// je to levy uzel
+			BSTDelete( &(( *RootPtr )->LPtr), K);
+
+	else if ( K > ( *RootPtr )->Key) 	// je to pravy uzel
+			BSTDelete( &(( *RootPtr )->RPtr), K);
+
+	else if ( ( *RootPtr )->LPtr && ( *RootPtr )->RPtr )
+		ReplaceByRightmost( ( *RootPtr ), &(( *RootPtr )->LPtr));
+
+	else{
+		tBSTNodePtr delete_me = ( *RootPtr );
+
+		if(( *RootPtr )->LPtr)
+			 *RootPtr = ( *RootPtr )->LPtr;
+		else
+			 *RootPtr = ( *RootPtr )->RPtr;
+		free(delete_me);
+	}
 }
 
 void BSTDispose (tBSTNodePtr *RootPtr) {
@@ -177,8 +210,14 @@ void BSTDispose (tBSTNodePtr *RootPtr) {
 **/
 	
 
-	 solved = FALSE;		  /* V případě řešení smažte tento řádek! */
+	if( !*RootPtr )
+		return;
 
+	BSTDispose(&(( *RootPtr )->LPtr));
+	BSTDispose(&(( *RootPtr )->RPtr));
+
+	free( *RootPtr );
+	*RootPtr = NULL;
 }
 
 /* konec c401.c */
